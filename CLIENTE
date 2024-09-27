@@ -1,0 +1,38 @@
+
+import socket
+
+def iniciar_cliente():
+
+    cliente_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    
+    cliente_socket.connect(('localhost', 12345))
+    
+    pregunta = cliente_socket.recv(1024).decode('utf-8')
+    print(f"Servidor: {pregunta}")
+    nombre = input("Tu nombre: ")
+    cliente_socket.send(nombre.encode('utf-8'))
+    
+    pregunta = cliente_socket.recv(1024).decode('utf-8')
+    print(f"Servidor: {pregunta}")
+    edad = input("Tu edad: ")
+    cliente_socket.send(edad.encode('utf-8'))
+    
+    pregunta = cliente_socket.recv(1024).decode('utf-8')
+    print(f"Servidor: {pregunta}")
+    correo = input("Tu correo electrónico: ")
+    cliente_socket.send(correo.encode('utf-8'))
+    
+
+    confirmacion = cliente_socket.recv(1024).decode('utf-8')
+    print(f"Servidor: {confirmacion}")
+    
+
+    cliente_socket.close()
+
+
+iniciar_cliente()
+
+
+
+
+
