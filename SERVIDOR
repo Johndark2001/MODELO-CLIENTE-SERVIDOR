@@ -1,0 +1,39 @@
+
+import socket
+
+def iniciar_servidor():
+    servidor_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    
+    servidor_socket.bind(('localhost', 12345))
+    
+    servidor_socket.listen(5)
+    print("Servidor escuchando en el puerto 12345...")
+    
+    while True:
+        cliente_socket, direccion_cliente = servidor_socket.accept()
+        print(f"Conexión establecida con {direccion_cliente}")
+        
+        cliente_socket.send("¿Cuál es tu nombre?".encode('utf-8'))
+        nombre = cliente_socket.recv(1024).decode('utf-8')
+        print(f"Nombre recibido: {nombre}")
+        
+        cliente_socket.send("¿Cuál es tu edad?".encode('utf-8'))
+        edad = cliente_socket.recv(1024).decode('utf-8')
+        print(f"Edad recibida: {edad}")
+        
+        cliente_socket.send("¿Cuál es tu correo electrónico?".encode('utf-8'))
+        correo = cliente_socket.recv(1024).decode('utf-8')
+        print(f"Correo recibido: {correo}")
+        
+        confirmacion = f"Gracias {nombre}, de {edad} años. Tu correo {correo} ha sido registrado."
+        cliente_socket.send(confirmacion.encode('utf-8'))
+        
+        cliente_socket.close()
+
+iniciar_servidor()
+
+
+
+
+
+
